@@ -14,7 +14,7 @@ import java.util.List;
         private final JdbcTemplate jdbcTemplate;
 
         @Autowired
-        public FruitDaoJdbclmpl(JdbcTemplate jdbcTemplate) {
+        public ProductDaoJdbcImpl(JdbcTemplate jdbcTemplate) {
             this.jdbcTemplate = jdbcTemplate;
         }
 
