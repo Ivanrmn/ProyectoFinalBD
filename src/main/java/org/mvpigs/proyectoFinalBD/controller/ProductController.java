@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.*;
         @PostMapping
         public ProductDto insert(@RequestBody ProductDto productDto)
                 throws Exception {
-            return productService.insert(fruitDto);
+            return productService.insert(productDto);
         }
     }
 }
