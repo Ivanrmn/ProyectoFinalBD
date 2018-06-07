@@ -4,7 +4,9 @@ import org.mvpigs.proyectoFinalBD.model.ProductDto;
 import org.mvpigs.proyectoFinalBD.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
-    @RestController
+import java.util.Optional;
+
+@RestController
     @RequestMapping(value = ProductController.MAPPING)
     public class ProductController {
 
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
         }
 
         @GetMapping(value = PRODUCT_MAPPING)
-        public ProductDto getProduct(@PathVariable Long id)
+        public Optional<ProductDto> getProduct(@PathVariable Long id)
                 throws Exception {
             return productService.findOne(id);
         }
@@ -43,4 +45,3 @@ import org.springframework.web.bind.annotation.*;
             return productService.insert(productDto);
         }
     }
-}
