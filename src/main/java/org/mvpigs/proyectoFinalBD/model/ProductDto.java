@@ -1,5 +1,8 @@
 package org.mvpigs.proyectoFinalBD.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 public class ProductDto {
     Long id;
     String name;

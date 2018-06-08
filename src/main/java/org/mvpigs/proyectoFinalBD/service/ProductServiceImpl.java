@@ -17,19 +17,17 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductConverter productConverter;
-    private final Product product;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, ProductConverter productConverter,
-                              Product product) {
+    public ProductServiceImpl(ProductRepository productRepository, ProductConverter productConverter) {
         this.productRepository = productRepository;
         this.productConverter = productConverter;
-        this.product = product;
+
     }
 
     @Override
     public List<ProductDto> findAll() {
-        List<Product> productList = (List<Product>) productRepository.findAll();
+        List<Product> productList = productRepository.findAll();
 
         return productList.stream()
                 .map(product -> productConverter.toApiModel(product, ProductDto.class)
@@ -37,34 +35,35 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductDto> findOne(Long id) {
-        Product product = productRepository.findOne(id);
-        if (product == null) {
-            return Optional.empty();
-        }
-        return Optional.of(productConverter.toApiModel(product, ProductDto.class));
+    public ProductDto findOne(Long id) {
+        Product product = productRepository.getOne(id);
+        if (product != null) {
+            return productConverter.toApiModel(product, ProductDto.class);
+        }else {
+            return null;
+    }
     }
 
     @Override
     public void delete(ProductDto productDto) throws Exception {
         try {
-            Product product = productRepository.findOne(productDto.getId());
-            if (product != null) {
-                productRepository.delete(product);
+            Optional<Product> product = Optional.of(productRepository.getOne(productDto.getId()));
+            if (product.get() != null) {
+                productRepository.delete(product.get());
             }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             throw new Exception(e.getMessage(), e.getCause());
         }
     }
 
     @Override
     public ProductDto update(ProductDto productDto) throws Exception{
-        Product product = productRepository.findOne(productDto.getId());
+        Optional<Product> product = Optional.of(productRepository.getOne(productDto.getId()));
         try {
             if (product != null) {
                 BeanUtils.copyProperties(productDto, product);
-                product = productRepository.save(product);
-                return productConverter.toApiModel(product, ProductDto.class);
+                productRepository.save(product.get());
+                return productConverter.toApiModel(product.get(), ProductDto.class);
             }
         } catch (Exception e) {
             throw new Exception(e.getMessage(), e.getCause());

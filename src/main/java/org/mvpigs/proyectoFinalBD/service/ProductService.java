@@ -9,7 +9,7 @@ public interface ProductService {
 
     List<ProductDto> findAll();
 
-    Optional<ProductDto> findOne(Long id);
+    ProductDto findOne(Long id);
 
     void delete(ProductDto productDto) throws Exception;
 
@@ -17,4 +17,3 @@ public interface ProductService {
 
     ProductDto insert(ProductDto productDto);
 }
-

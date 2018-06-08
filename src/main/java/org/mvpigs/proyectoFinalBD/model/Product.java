@@ -1,7 +1,6 @@
 package org.mvpigs.proyectoFinalBD.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.persistence.Entity;
 
     @Entity
@@ -13,14 +12,12 @@ import javax.persistence.Entity;
         private Long id;
 
         @Column(name="NAME")
-        @NotNull
         private String name;
 
         @Column(name="DESCRIPTION")
         private String description;
 
         @Column(name="PRICE")
-        @NotNull
         private Double price;
 
         public Long getId() {
