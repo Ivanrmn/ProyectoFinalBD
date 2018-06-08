@@ -12,13 +12,14 @@ public class ProductConverter {
         result.setPrice(product.getPrice());
         return result;
     }
-    public Product toDomainModel(ProductDto fruitDto, Class<Product> fruitClass) {
-            Product result = new Product();
-            result.setId(fruitDto.getId());
-            result.setName(fruitDto.getName());
-            result.setDescription(fruitDto.getDescription());
-            result.setPrice(fruitDto.getPrice());
-            return result;
+
+    public Product toDomainModel(ProductDto productDto, Class<Product> productClass) {
+        Product result = new Product();
+        result.setId(productDto.getId());
+        result.setName(productClass.getName());
+        result.setDescription(productDto.getDescription());
+        result.setPrice(productDto.getPrice());
+        return result;
 
     }
 }
