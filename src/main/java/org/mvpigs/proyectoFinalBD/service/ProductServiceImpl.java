@@ -57,24 +57,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto update(ProductDto productDto) throws Exception{
-        Optional<Product> product = Optional.of(productRepository.getOne(productDto.getId()));
-        try {
+    public ProductDto update(ProductDto productDto) {
+        Product product = productRepository.getOne(productDto.getId());
             if (product != null) {
                 BeanUtils.copyProperties(productDto, product);
-                productRepository.save(product.get());
-                return productConverter.toApiModel(product.get(), ProductDto.class);
+                productRepository.save(product);
+                return productConverter.toApiModel(product, ProductDto.class);
             }
-        } catch (Exception e) {
-            throw new Exception(e.getMessage(), e.getCause());
-        }
         return null;
     }
 
     @Override
     public ProductDto insert(ProductDto productDto) {
         Product product = productConverter.toDomainModel(productDto, Product.class);
-        product = productRepository.save(product);
-        return productConverter.toApiModel(product, ProductDto.class);
+            product = productRepository.save(product);
+            return productConverter.toApiModel(product, ProductDto.class);
     }
 }
