@@ -1,98 +1,96 @@
 package org.mvpigs.proyectoFinalBD.controller;
 
-import org.mvpigs.proyectoFinalBD.model.Product;
-import org.mvpigs.proyectoFinalBD.model.ProductDto;
-import org.mvpigs.proyectoFinalBD.service.ProductService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.mvpigs.proyectoFinalBD.model.TiendaDto;
+import org.mvpigs.proyectoFinalBD.service.TiendaService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = ProductController.MAPPING)
-public class ProductController {
+@RequestMapping(value = TiendaController.MAPPING)
+public class TiendaController {
 
     public static final String MAPPING = "/store";
 
-    public static final String PRODUCT_MAPPING = "/{id}";
+    public static final String TIENDA_MAPPING = "/{id}";
 
-    private final ProductService productService;
+    private final TiendaService tiendaService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    public TiendaController(TiendaService tiendaService) {
+        this.tiendaService = tiendaService;
     }
 
-    @ApiOperation(value = "Get product")
+    @ApiOperation(value = "Get tienda")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Get product Ok", response = ProductDto[].class),
+            @ApiResponse(code = 200, message = "Get tienda Ok", response = TiendaDto[].class),
             @ApiResponse(code = 401, message = ApiConstants.UNAUTHORIZED, response = ApiError.class),
             @ApiResponse(code = 403, message = ApiConstants.FORBIDDEN, response = ApiError.class),
             @ApiResponse(code = 404, message = ApiConstants.NOT_FOUND, response = ApiError.class),
             @ApiResponse(code = 500, message = ApiConstants.INTERNAL_SERVER_ERROR_MESSAGE, response = ApiError.class) })
-    @GetMapping(value = PRODUCT_MAPPING, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = TIENDA_MAPPING, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
-    public Optional<ProductDto> getProduct(@PathVariable Long id) {
-        return Optional.ofNullable(productService.findOne(id));
+    public Optional<TiendaDto> getTienda(@PathVariable Long id) {
+        return Optional.ofNullable(tiendaService.findOne(id));
     }
 
-    @ApiOperation(value = "Update product")
+    @ApiOperation(value = "Update tienda")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Update a product Ok", response = ProductDto[].class),
+            @ApiResponse(code = 200, message = "Update a tienda Ok", response = TiendaDto[].class),
             @ApiResponse(code = 400, message = ApiConstants.BAD_REQUEST_MESSAGE, response = ApiValidationError.class),
             @ApiResponse(code = 401, message = ApiConstants.UNAUTHORIZED, response = ApiError.class),
             @ApiResponse(code = 403, message = ApiConstants.FORBIDDEN, response = ApiError.class),
             @ApiResponse(code = 500, message = ApiConstants.INTERNAL_SERVER_ERROR_MESSAGE, response = ApiError.class) })
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
-    public ProductDto update(@RequestBody ProductDto productDto)
+    public TiendaDto update(@RequestBody TiendaDto tiendaDto)
             throws Exception {
-        return productService.update(productDto);
+        return tiendaService.update(tiendaDto);
     }
 
-    @ApiOperation(value = "Delete product")
+    @ApiOperation(value = "Delete tienda")
     @ApiResponses(value = {
-            @ApiResponse(code = 204, message = "Delete a product Ok", response = ProductDto[].class),
+            @ApiResponse(code = 204, message = "Delete a tienda Ok", response = TiendaDto[].class),
             @ApiResponse(code = 401, message = ApiConstants.UNAUTHORIZED, response = ApiError.class),
             @ApiResponse(code = 403, message = ApiConstants.FORBIDDEN, response = ApiError.class),
             @ApiResponse(code = 500, message = ApiConstants.INTERNAL_SERVER_ERROR_MESSAGE, response = ApiError.class) })
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ProductDto delete(@RequestBody ProductDto productDto)
+    public TiendaDto delete(@RequestBody TiendaDto tiendaDto)
             throws Exception {
-        productService.delete(productDto);
+        tiendaService.delete(tiendaDto);
         return null;
     }
 
-    @ApiOperation(value = "Add a product")
+    @ApiOperation(value = "Add a tienda")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Add a product Ok", response = ProductDto[].class),
+            @ApiResponse(code = 201, message = "Add a tienda Ok", response = TiendaDto[].class),
             @ApiResponse(code = 400, message = ApiConstants.BAD_REQUEST_MESSAGE, response = ApiValidationError.class),
             @ApiResponse(code = 401, message = ApiConstants.UNAUTHORIZED, response = ApiError.class),
             @ApiResponse(code = 403, message = ApiConstants.FORBIDDEN, response = ApiError.class),
             @ApiResponse(code = 500, message = ApiConstants.INTERNAL_SERVER_ERROR_MESSAGE, response = ApiError.class) })
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ProductDto insert(@RequestBody ProductDto productDto) {
-        return productService.insert(productDto);
+    public TiendaDto insert(@RequestBody TiendaDto tiendaDto) {
+        return tiendaService.insert(tiendaDto);
     }
 
-    @ApiOperation(value = "Get all products")
+    @ApiOperation(value = "Get all tiendas")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Get all products Ok", response = Product[].class),
+            @ApiResponse(code = 200, message = "Get all tiendas Ok", response = TiendaDto[].class),
             @ApiResponse(code = 401, message = ApiConstants.UNAUTHORIZED, response = ApiError.class),
             @ApiResponse(code = 403, message = ApiConstants.FORBIDDEN, response = ApiError.class),
             @ApiResponse(code = 500, message = ApiConstants.INTERNAL_SERVER_ERROR_MESSAGE, response = ApiError.class) })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.OK)
-    public List<ProductDto> findAll(
+    public List<TiendaDto> findAll(
             @RequestHeader(value = ApiConstants.MOCK_RESPONSE_HEADER, required = false) boolean mockResponse)
             throws Exception {
-        return productService.findAll();
+        return tiendaService.findAll();
     }
 }

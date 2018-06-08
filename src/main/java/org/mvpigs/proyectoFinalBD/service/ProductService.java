@@ -3,7 +3,6 @@ package org.mvpigs.proyectoFinalBD.service;
 import org.mvpigs.proyectoFinalBD.model.ProductDto;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
 
